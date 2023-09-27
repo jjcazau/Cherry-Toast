@@ -445,7 +445,7 @@ class _CherryToastState extends State<CherryToast>
   Widget _renderLeftLayoutToast(BuildContext context) {
     return GestureDetector(
       onVerticalDragUpdate: (details) {
-        if (details.delta.dy < -3 || details.delta.dy > 3) {
+        if (details.delta.dy < 0 || details.delta.dy > 0) {
           _dismissToast();
         }
       },
