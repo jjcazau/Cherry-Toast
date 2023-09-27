@@ -293,8 +293,14 @@ class CherryToast extends StatefulWidget {
                   : MainAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onVerticalDragDown: (details) {
-                    _overlayEntry?.remove();
+                  onVerticalDragUpdate: (details) {
+                    if (details.delta.dy > 0) {
+                      // Swiped Down
+                      _overlayEntry?.remove();
+                    } else if (details.delta.dy < 0) {
+                      // Swiped Up
+                      _overlayEntry?.remove();
+                    }
                   },
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 300),
