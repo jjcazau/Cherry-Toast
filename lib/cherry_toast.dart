@@ -281,7 +281,7 @@ class CherryToast extends StatefulWidget {
       },
     );
 
-    Overlay.of(context).insert(overlayEntry);
+    Navigator.of(context).overlay!.insert(overlayEntry);
     // Navigator.of(context).overlay. .push(
     //   PageRouteBuilder(
     //     fullscreenDialog: false,
