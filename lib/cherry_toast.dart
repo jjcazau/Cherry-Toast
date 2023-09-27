@@ -281,8 +281,7 @@ class CherryToast extends StatefulWidget {
   void show(BuildContext context) {
     _overlayEntry = OverlayEntry(
       builder: (context) {
-        return Theme(
-          data: Theme.of(context),
+        return Material(
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(
