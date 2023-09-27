@@ -277,7 +277,14 @@ class CherryToast extends StatefulWidget {
   void show(BuildContext context) {
     OverlayEntry overlayEntry = OverlayEntry(
       builder: (context) {
-        return this;
+        return SafeArea(
+          child: Column(
+            mainAxisAlignment: toastPosition == Position.bottom
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
+            children: [SizedBox(child: this)],
+          ),
+        );
       },
     );
 
