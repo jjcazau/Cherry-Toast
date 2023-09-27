@@ -277,55 +277,33 @@ class CherryToast extends StatefulWidget {
   void show(BuildContext context) {
     OverlayEntry overlayEntry = OverlayEntry(
       builder: (context) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-              bottom: 20,
-            ),
-            child: Column(
-              mainAxisAlignment: toastPosition == Position.bottom
-                  ? MainAxisAlignment.end
-                  : MainAxisAlignment.start,
-              children: [
-                ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 300),
-                    child: this)
-              ],
+        return Theme(
+          data: Theme.of(context),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+                bottom: 20,
+              ),
+              child: Column(
+                mainAxisAlignment: toastPosition == Position.bottom
+                    ? MainAxisAlignment.end
+                    : MainAxisAlignment.start,
+                children: [
+                  ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      child: this)
+                ],
+              ),
             ),
           ),
         );
       },
     );
 
-    Navigator.of(context).overlay!.insert(overlayEntry);
-    // Navigator.of(context).overlay. .push(
-    //   PageRouteBuilder(
-    //     fullscreenDialog: false,
-    //     barrierColor: Colors.grey.withOpacity(0.1),
-    //     opaque: false,
-    //     barrierDismissible: true,
-    //     pageBuilder: (context, _, __) => GestureDetector(
-    //       onTap: Navigator.of(context).pop,
-    //       child: SafeArea(
-    //         child: AlertDialog(
-    //           backgroundColor: Colors.transparent,
-    //           elevation: 0,
-    //           content: Column(
-    //             mainAxisAlignment: toastPosition == Position.bottom
-    //                 ? MainAxisAlignment.end
-    //                 : MainAxisAlignment.start,
-    //             children: [
-    //               SizedBox(
-    //                 child: this,
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
+    if (Navigator.of(context).overlay != null) {
+      Navigator.of(context).overlay!.insert(overlayEntry);
+    }
   }
 
   @override
