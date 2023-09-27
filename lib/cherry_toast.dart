@@ -292,9 +292,15 @@ class CherryToast extends StatefulWidget {
                   ? MainAxisAlignment.end
                   : MainAxisAlignment.start,
               children: [
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 300),
-                  child: Material(type: MaterialType.transparency, child: this),
+                GestureDetector(
+                  onVerticalDragDown: (details) {
+                    _overlayEntry?.remove();
+                  },
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 300),
+                    child:
+                        Material(type: MaterialType.transparency, child: this),
+                  ),
                 ),
               ],
             ),
