@@ -281,24 +281,22 @@ class CherryToast extends StatefulWidget {
   void show(BuildContext context) {
     _overlayEntry = OverlayEntry(
       builder: (context) {
-        return Material(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-                bottom: 20,
-              ),
-              child: Column(
-                mainAxisAlignment: toastPosition == Position.bottom
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.start,
-                children: [
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 300),
-                    child: this,
-                  ),
-                ],
-              ),
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 20,
+              bottom: 20,
+            ),
+            child: Column(
+              mainAxisAlignment: toastPosition == Position.bottom
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              children: [
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 300),
+                  child: Material(type: MaterialType.transparency, child: this),
+                ),
+              ],
             ),
           ),
         );
