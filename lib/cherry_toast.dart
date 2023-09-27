@@ -287,7 +287,11 @@ class CherryToast extends StatefulWidget {
               mainAxisAlignment: toastPosition == Position.bottom
                   ? MainAxisAlignment.end
                   : MainAxisAlignment.start,
-              children: [SizedBox(width: 100, child: this)],
+              children: [
+                ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 300),
+                    child: this)
+              ],
             ),
           ),
         );
