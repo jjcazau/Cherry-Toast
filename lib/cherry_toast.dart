@@ -271,11 +271,15 @@ class CherryToast extends StatefulWidget {
   ///
   final bool enableIconAnimation;
 
+  ///Overlay entry used to display the toast.
+  ///
+  OverlayEntry? _overlayEntry;
+
   ///Display the created cherry toast
   ///[context] the context of the application
   ///
   void show(BuildContext context) {
-    OverlayEntry overlayEntry = OverlayEntry(
+    _overlayEntry = OverlayEntry(
       builder: (context) {
         return Theme(
           data: Theme.of(context),
@@ -301,8 +305,8 @@ class CherryToast extends StatefulWidget {
       },
     );
 
-    if (Navigator.of(context).overlay != null) {
-      Navigator.of(context).overlay!.insert(overlayEntry);
+    if (Navigator.of(context).overlay != null && _overlayEntry != null) {
+      Navigator.of(context).overlay!.insert(_overlayEntry!);
     }
   }
 
@@ -338,7 +342,7 @@ class _CherryToastState extends State<CherryToast>
         slideController.reverse();
         Timer(widget.animationDuration, () {
           if (mounted) {
-            Navigator.maybePop(context);
+            widget._overlayEntry?.remove();
           }
         });
       });
@@ -555,7 +559,7 @@ class _CherryToastState extends State<CherryToast>
         Timer(
           widget.animationDuration,
           () {
-            Navigator.pop(context);
+            widget._overlayEntry?.remove();
           },
         );
       },
