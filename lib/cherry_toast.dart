@@ -275,33 +275,40 @@ class CherryToast extends StatefulWidget {
   ///[context] the context of the application
   ///
   void show(BuildContext context) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        fullscreenDialog: false,
-        barrierColor: Colors.grey.withOpacity(0.1),
-        opaque: false,
-        barrierDismissible: true,
-        pageBuilder: (context, _, __) => GestureDetector(
-          onTap: Navigator.of(context).pop,
-          child: SafeArea(
-            child: AlertDialog(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              content: Column(
-                mainAxisAlignment: toastPosition == Position.bottom
-                    ? MainAxisAlignment.end
-                    : MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    child: this,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    OverlayEntry overlayEntry = OverlayEntry(
+      builder: (context) {
+        return this;
+      },
     );
+
+    Overlay.of(context).insert(overlayEntry);
+    // Navigator.of(context).overlay. .push(
+    //   PageRouteBuilder(
+    //     fullscreenDialog: false,
+    //     barrierColor: Colors.grey.withOpacity(0.1),
+    //     opaque: false,
+    //     barrierDismissible: true,
+    //     pageBuilder: (context, _, __) => GestureDetector(
+    //       onTap: Navigator.of(context).pop,
+    //       child: SafeArea(
+    //         child: AlertDialog(
+    //           backgroundColor: Colors.transparent,
+    //           elevation: 0,
+    //           content: Column(
+    //             mainAxisAlignment: toastPosition == Position.bottom
+    //                 ? MainAxisAlignment.end
+    //                 : MainAxisAlignment.start,
+    //             children: [
+    //               SizedBox(
+    //                 child: this,
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   @override
