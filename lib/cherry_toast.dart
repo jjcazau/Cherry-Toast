@@ -614,6 +614,7 @@ class _CherryToastState extends State<CherryToast>
                       InkWell(
                         onTap: () {
                           widget.actionHandler?.call();
+                          _dismissToast();
                         },
                         child: widget.action,
                       )
