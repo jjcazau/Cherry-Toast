@@ -292,21 +292,9 @@ class CherryToast extends StatefulWidget {
                   ? MainAxisAlignment.end
                   : MainAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onVerticalDragUpdate: (details) {
-                    if (details.delta.dy > 10) {
-                      // Swiped Down
-                      _overlayEntry?.remove();
-                    } else if (details.delta.dy < -10) {
-                      // Swiped Up
-                      _overlayEntry?.remove();
-                    }
-                  },
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 300),
-                    child:
-                        Material(type: MaterialType.transparency, child: this),
-                  ),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 300),
+                  child: Material(type: MaterialType.transparency, child: this),
                 ),
               ],
             ),
@@ -455,60 +443,67 @@ class _CherryToastState extends State<CherryToast>
   ///render a left layout toast if [this.widget.layout] set to LTR
   ///
   Widget _renderLeftLayoutToast(BuildContext context) {
-    return Column(
-      mainAxisAlignment: widget.toastPosition == Position.top
-          ? MainAxisAlignment.start
-          : MainAxisAlignment.end,
-      children: [
-        SlideTransition(
-          position: offsetAnimation,
-          child: Container(
-            decoration: toastDecoration,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Row(
-                      crossAxisAlignment:
-                          widget.description == null && widget.action == null
-                              ? CrossAxisAlignment.center
-                              : CrossAxisAlignment.start,
-                      children: [
-                        if (widget.iconWidget != null)
-                          widget.iconWidget!
-                        else if (widget.displayIcon)
-                          CherryToastIcon(
-                            color: widget.themeColor,
-                            icon: widget.icon,
-                            iconSize: widget.iconSize,
-                            iconColor: widget.iconColor,
-                            enableAnimation: widget.enableIconAnimation,
-                          )
-                        else
-                          Container(),
-                        _renderToastContent(),
-                      ],
+    return GestureDetector(
+      onVerticalDragUpdate: (details) {
+        if (details.delta.dy < -3 || details.delta.dy > 3) {
+          _dismissToast();
+        }
+      },
+      child: Column(
+        mainAxisAlignment: widget.toastPosition == Position.top
+            ? MainAxisAlignment.start
+            : MainAxisAlignment.end,
+        children: [
+          SlideTransition(
+            position: offsetAnimation,
+            child: Container(
+              decoration: toastDecoration,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Row(
+                        crossAxisAlignment:
+                            widget.description == null && widget.action == null
+                                ? CrossAxisAlignment.center
+                                : CrossAxisAlignment.start,
+                        children: [
+                          if (widget.iconWidget != null)
+                            widget.iconWidget!
+                          else if (widget.displayIcon)
+                            CherryToastIcon(
+                              color: widget.themeColor,
+                              icon: widget.icon,
+                              iconSize: widget.iconSize,
+                              iconColor: widget.iconColor,
+                              enableAnimation: widget.enableIconAnimation,
+                            )
+                          else
+                            Container(),
+                          _renderToastContent(),
+                        ],
+                      ),
                     ),
-                  ),
-                  widget.displayCloseButton
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                            top: 10,
-                            right: 10,
-                          ),
-                          child: _renderCloseButton(context),
-                        )
-                      : Container(),
-                ],
+                    widget.displayCloseButton
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                              right: 10,
+                            ),
+                            child: _renderCloseButton(context),
+                          )
+                        : Container(),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
