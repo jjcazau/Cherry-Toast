@@ -278,11 +278,17 @@ class CherryToast extends StatefulWidget {
     OverlayEntry overlayEntry = OverlayEntry(
       builder: (context) {
         return SafeArea(
-          child: Column(
-            mainAxisAlignment: toastPosition == Position.bottom
-                ? MainAxisAlignment.end
-                : MainAxisAlignment.start,
-            children: [SizedBox(child: this)],
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 20,
+              bottom: 20,
+            ),
+            child: Column(
+              mainAxisAlignment: toastPosition == Position.bottom
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              children: [SizedBox(width: 100, child: this)],
+            ),
           ),
         );
       },
