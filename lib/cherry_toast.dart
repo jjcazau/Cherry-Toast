@@ -295,8 +295,9 @@ class CherryToast extends StatefulWidget {
                     : MainAxisAlignment.start,
                 children: [
                   ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 300),
-                      child: this)
+                    constraints: const BoxConstraints(maxWidth: 300),
+                    child: this,
+                  ),
                 ],
               ),
             ),
@@ -354,6 +355,15 @@ class _CherryToastState extends State<CherryToast>
     autoDismissTimer?.cancel();
     slideController.dispose();
     super.dispose();
+  }
+
+  ///Dismiss the toast.
+  void _dismissToast() {
+    slideController.reverse();
+    autoDismissTimer?.cancel();
+    Timer(widget.animationDuration, () {
+      widget._overlayEntry?.remove();
+    });
   }
 
   ///Initialize animation parameters [slideController] and [offsetAnimation]
@@ -554,14 +564,7 @@ class _CherryToastState extends State<CherryToast>
   InkWell _renderCloseButton(BuildContext context) {
     return InkWell(
       onTap: () {
-        slideController.reverse();
-        autoDismissTimer?.cancel();
-        Timer(
-          widget.animationDuration,
-          () {
-            widget._overlayEntry?.remove();
-          },
-        );
+        _dismissToast();
       },
       child: Icon(
         Icons.close,
