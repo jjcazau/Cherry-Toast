@@ -294,10 +294,10 @@ class CherryToast extends StatefulWidget {
               children: [
                 GestureDetector(
                   onVerticalDragUpdate: (details) {
-                    if (details.delta.dy > 0) {
+                    if (details.delta.dy > 10) {
                       // Swiped Down
                       _overlayEntry?.remove();
-                    } else if (details.delta.dy < 0) {
+                    } else if (details.delta.dy < -10) {
                       // Swiped Up
                       _overlayEntry?.remove();
                     }
